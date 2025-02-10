@@ -14,18 +14,15 @@ import java.util.Optional;
 @RequestMapping("/api")
 public class UserController {
 
-    // Dålig namngivning på variabel
     @Autowired
     private UserRepository ur;
 
-    // Dålig namngivning på parametrar och variabler
     @PostMapping("/users")
     public ResponseEntity<User> createUser(@RequestBody User u) {
         // Saknar validering
         return ResponseEntity.ok(ur.save(u));
     }
 
-    // Duplicerad kod för felhantering
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable Long id) {
         Optional<User> usr = ur.findById(id);
@@ -35,7 +32,6 @@ public class UserController {
         return ResponseEntity.ok(usr.get());
     }
 
-    // Samma felhantering duplicerad
     @GetMapping("/users/email/{email}")
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
         Optional<User> usr = ur.findByEmail(email);
@@ -45,7 +41,6 @@ public class UserController {
         return ResponseEntity.ok(usr.get());
     }
 
-    // Dålig felhantering och ingen logging
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> dltUsr(@PathVariable Long id) {
         try {
@@ -56,13 +51,11 @@ public class UserController {
         }
     }
 
-    // Ingen paginering, kan returnera för mycket data
     @GetMapping("/users")
     public List<User> getAll() {
         return ur.findAll();
     }
 
-    // Duplicerad affärslogik
     @PutMapping("/users/{id}/activate")
     public ResponseEntity<User> activateUser(@PathVariable Long id) {
         Optional<User> usr = ur.findById(id);
@@ -76,7 +69,6 @@ public class UserController {
         return ResponseEntity.ok(ur.save(u));
     }
 
-    // Samma logik duplicerad
     @PutMapping("/users/{id}/deactivate")
     public ResponseEntity<User> deactivateUser(@PathVariable Long id) {
         Optional<User> usr = ur.findById(id);
